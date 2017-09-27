@@ -18,3 +18,5 @@ Python 自动构建打包上传SVN脚本
 #3.本文自动查询配置文件信息，不需要读者查询添加，代码里面的打包准备请自行配置
 #4.检查xcodebuild是否可用，执行xcodebuild -list
 #5.检查配置证书是否匹配可用，ios_Distribution.mobileprovision文件目录下执行security cms -D -i  ios_Distribution.mobileprovision
+
+修复iOS11不能构建问题，主要原因是在原来的基础上多了几条plist配置，iOS11根据配置更精确的打包ipa，本脚本默认常规模式打包，如有特殊需要，可以在脚本里面修改配置参数，或者直接联系读者技术指导
