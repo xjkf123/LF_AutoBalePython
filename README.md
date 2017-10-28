@@ -1,22 +1,40 @@
-# LF_AutoBalePython
-Python 自动构建打包上传SVN脚本
-#使用说明
-#本脚本基于Python语言，学习优化的自动化构建打包脚本，目前仅支持企业发布SVN上传，注释完全，使用便捷，如有其它需要，可自行修改或联系笔者 173090505@qq.com
+本脚本优势：
 
-#条件准备
-#1. cd 到需要打包的项目路径下
-#2. 四个配置文件放入该目录下
-#配置文件 1）用于打包 ios_distribution.cer 发布证书，证书名称随意
-#配置文件 2）cer对应的配置文件 ios_Distribution.mobileprovision  文件名字随意
-#配置文件 3）本文自带exportOptionsPlist.plist 文件，用于生成xcarchive 的打包配置，(分为app-store、ad-hoc、enterprise、development) 这里默认选择第三中enterprise打包方式
-#配置文件 4）本文自带pythonText.py 执行脚本文件
-#3. 执行，放入四个配置文件到项目目录下，将cer及mobileprovision双击导入后，执行python pythonText.py即可
+1.本脚本采用手动打包，证书信息自动读取,无需读者任何手动查询配置
 
-#注意事项
-#1.本文支持.xcodeproj  .xcworkspace两种项目管理方式打包，读者可自行解注释 (#步骤二 构建企业版)
-#2.本文默认打包，上传替换SVN文件方式，默认项目名+.ipa为文件名上传，读者自行添加SVN更新地址
-#3.本文自动查询配置文件信息，不需要读者查询添加，代码里面的打包准备请自行配置
-#4.检查xcodebuild是否可用，执行xcodebuild -list
-#5.检查配置证书是否匹配可用，ios_Distribution.mobileprovision文件目录下执行security cms -D -i  ios_Distribution.mobileprovision
+2.配置文件exportOptionsPlist.plist，根据.mobileprovision文件自动生存配置
+3.本脚本支持-xcworkspace  -xcodeproj两种项目管理构建
+4.本脚本支持多渠道上传，支持相关密码验证输入（fir，svn，邮件发送）
 
-修复xcode 9不能构建问题，主要原因是在原来的基础上多了几条plist配置，iOS11根据配置更精确的打包ipa，本脚本默认常规模式打包，如有特殊需要，可以在脚本里面修改配置参数，或者直接联系读者技术指导
+本脚本准备须知：
+
+1.本脚本文件pythonPerform.py、.mobileprovision、.cer能构建已经自动添加，这里无需添加会自动读取
+2.将pythonPerform.py  .mobileprovision放入一个A文件夹，在A放入目标项目即可
+3.执行，cd到A文件夹下，执行python pythonPerform.py会自动构建
+
+上传fir渠道须知：
+
+1.上传fir的用户请检测fir命令是否可用，如果没有安装，请先执行sudo gem install -n /usr/local/bin fir-cli安装
+2.fir用户准备自己要上传的apitoken即可
+上传SVN渠道须知：
+
+1.请准备svn上传地址即可，密码账号会在第一次验证，以后无需验证
+
+2.svn上传会自动替换目标文件
+
+发布邮件须知：
+
+1.发布邮件请先配置发送方邮箱
+
+2.如果有效是阿里企业邮箱配置mtp.mxhichina.com，端口号465，阿里的smtp发送服务自动开启，接收方邮箱随意
+3.如果是QQ邮箱作为发送方，请先开启第三方登录邮箱smtp服务，然后用生存的安全码作为本邮件的发送密码
+
+注意事项
+
+1.archive过程不能修改代码，否则正在构建的包会有修改中的问题
+
+2.查看~/Library/MobileDevice/Provisioning\ Profiles/  查看电脑mobileprovision文件集，security cms -D -I  filename.mobileprovision
+3.gem environment  查看gem环境
+4.本脚本需要xcodebuild安装，使用前先测试xcodebuild命令是否可用
+一切尽在不言中，自己看脚本吧，注释完全，使用便捷。
+github.com/xjkf123/LF_AutoBalePython
